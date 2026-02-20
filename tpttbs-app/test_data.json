@@ -1,0 +1,30 @@
+{
+  "coverSheet": {
+    "endMonthDate": "2025-01-31",
+    "closingDate": "2025-01-31",
+    "reporterType": "99",
+    "reporterCode": "TEST_REP",
+    "declarantType": "99",
+    "declarantCode": "TEST_DEC",
+    "reportingCurrency": "USD",
+    "layout": "1"
+  },
+  "securities": {
+    "1-003000": [
+      {
+        "codeType": "1",
+        "quotationType": "%",
+        "code": "US1234567890",
+        "holdSecurityType": "01",
+        "reportedAmount": "5000",
+        "nominalAmount": "5000",
+        "nominalCurrency": "USD",
+        "custodianBankCountry": "US"
+      }
+    ],
+    "1-005000": [],
+    "2-002050": [],
+    "2-003000": [],
+    "2-005000": []
+  }
+}

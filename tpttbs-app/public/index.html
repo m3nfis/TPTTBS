@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TPTTBS L1 — Security by Security Report</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="app-header">
+  <div class="header-left">
+    <h1>TPTTBS L1</h1>
+    <span class="subtitle">Security by Security Reporting — Securitisation Vehicles</span>
+  </div>
+  <div class="header-right">
+    <span class="bcl-badge">BCL Regulatory Report</span>
+    <span class="version-badge">Layout 1 / XML v1.4</span>
+  </div>
+</header>
+<div class="toolbar">
+  <button class="tb-btn tb-sample" id="btn-load-sample" title="Load valid dummy data for testing">&#9881; Load Sample Data</button>
+  <button class="tb-btn tb-save" id="btn-save-json" title="Save current report data as JSON for later editing">&#128190; Save Progress</button>
+  <button class="tb-btn tb-load" id="btn-load-json" title="Load a previously saved JSON report file">&#128194; Load File</button>
+  <input type="file" id="file-input" accept=".json,.xls,.xlsx" style="display:none">
+  <span class="tb-status" id="tb-status"></span>
+</div>
+
+<!-- Excel-style sheet tabs at the TOP (main sheets) -->
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="cover">Cover</button>
+  <button class="tab-btn" data-tab="assets">Assets</button>
+  <button class="tab-btn" data-tab="liabilities">Liabilities</button>
+  <button class="tab-btn" data-tab="validation">Validation Report</button>
+  <button class="tab-btn tab-btn-util" data-tab="glossary">Glossary</button>
+</nav>
+
+<!-- ======================== COVER SHEET ======================== -->
+<section id="tab-cover" class="tab-content active">
+  <div class="sheet-frame">
+    <div class="sheet-title-bar">
+      <span>Security by security reporting of securitisation vehicles</span>
+      <span class="layout-label">Layout 1</span>
+    </div>
+    <table class="excel-table cover-table">
+      <colgroup><col style="width:260px"><col style="width:340px"><col style="width:240px"></colgroup>
+      <thead>
+        <tr><th class="col-hdr">Field</th><th class="col-hdr">Value</th><th class="col-hdr">Status</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="lbl" data-tip="Reference date. Must be the last calendar day of the month (e.g. 2024-12-31). XML: endMonthDate">End of Month Date *</td>
+          <td class="inp"><input type="date" id="endMonthDate" class="ci" data-field="endMonthDate"></td>
+          <td class="sts" id="sts-endMonthDate"></td>
+        </tr>
+        <tr>
+          <td class="lbl" data-tip="Date when data was established. Must be ≤ End of Month Date. XML: closingDate">Closing Date *</td>
+          <td class="inp"><input type="date" id="closingDate" class="ci" data-field="closingDate"></td>
+          <td class="sts" id="sts-closingDate"></td>
+        </tr>
+        <tr>
+          <td class="lbl" data-tip="2-digit numeric institution type of the reporter (e.g. 34). XML: reporterID/type">Reporter Type *</td>
+          <td class="inp"><input type="text" id="reporterType" class="ci" maxlength="2" placeholder="e.g. 34" data-field="reporterType"></td>
+          <td class="sts" id="sts-reporterType"></td>
+        </tr>
+        <tr>
+          <td class="lbl" data-tip="Unique BCL identifier of the reporting entity. XML: reporterID/code">Reporter Code *</td>
+          <td class="inp"><input type="text" id="reporterCode" class="ci" placeholder="e.g. 999999" data-field="reporterCode"></td>
+          <td class="sts" id="sts-reporterCode"></td>
+        </tr>
+        <tr>
+          <td class="lbl" data-tip="2-digit institution type of the declarant FVC. XML: declarantID/type">Declarant Type *</td>
+          <td class="inp"><input type="text" id="declarantType" class="ci" maxlength="2" placeholder="e.g. 34" data-field="declarantType"></td>
+          <td class="sts" id="sts-declarantType"></td>
+        </tr>
+        <tr>
+          <td class="lbl" data-tip="Unique BCL identifier of the securitisation vehicle. XML: declarantID/code">Declarant Code *</td>
+          <td class="inp"><input type="text" id="declarantCode" class="ci" placeholder="e.g. 999999000" data-field="declarantCode"></td>
+          <td class="sts" id="sts-declarantCode"></td>
+        </tr>
+        <tr>
+          <td class="lbl" data-tip="ISO 4217 currency for all amounts. XML: reportingCurrency">Reporting Currency *</td>
+          <td class="inp">
+            <select id="reportingCurrency" class="ci" data-field="reportingCurrency">
+              <option value="">-- Select --</option>
+              <option value="EUR">EUR</option><option value="USD">USD</option>
+              <option value="GBP">GBP</option><option value="CHF">CHF</option>
+              <option value="JPY">JPY</option><option value="SEK">SEK</option>
+              <option value="NOK">NOK</option><option value="DKK">DKK</option>
+              <option value="PLN">PLN</option><option value="CZK">CZK</option>
+              <option value="HUF">HUF</option><option value="RON">RON</option>
+              <option value="AUD">AUD</option><option value="CAD">CAD</option>
+              <option value="SGD">SGD</option><option value="HKD">HKD</option>
+              <option value="CNY">CNY</option>
+            </select>
+          </td>
+          <td class="sts" id="sts-reportingCurrency"></td>
+        </tr>
+        <tr>
+          <td class="lbl" data-tip="Layout version = 1. XML: layout">Layout</td>
+          <td class="inp"><input type="text" id="layout" class="ci" value="1" readonly data-field="layout"></td>
+          <td class="sts" id="sts-layout"><span class="ok">&#10003; Valid</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ======================== ASSETS SHEET ======================== -->
+<section id="tab-assets" class="tab-content">
+  <div id="assets-sheet"></div>
+</section>
+
+<!-- ======================== LIABILITIES SHEET ======================== -->
+<section id="tab-liabilities" class="tab-content">
+  <div id="liabilities-sheet"></div>
+</section>
+
+<!-- ======================== VALIDATION ======================== -->
+<section id="tab-validation" class="tab-content">
+  <div class="sheet-frame">
+    <div class="sheet-title-bar">
+      <span>Validation Report</span>
+      <button class="btn btn-val" id="btn-run-validation">Run Full Validation</button>
+    </div>
+    <div class="val-summary" id="validation-summary">
+      <p class="hint">Click "Run Full Validation" to check all fields against BCL verification rules.</p>
+    </div>
+    <div id="validation-results"></div>
+    <div class="dl-section" id="download-section" style="display:none">
+      <button class="btn btn-dl" id="btn-download-xls">&#11015; Download Filled Report (.xls)</button>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== GLOSSARY ======================== -->
+<section id="tab-glossary" class="tab-content">
+  <div class="sheet-frame">
+    <div class="sheet-title-bar"><span>Glossary of Regulatory Terms</span></div>
+    <div class="glossary-content" id="glossary-content"></div>
+  </div>
+</section>
+
+<div class="tip-box" id="tip-box"></div>
+
+<script src="validation.js"></script>
+<script src="glossary.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

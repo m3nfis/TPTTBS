@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: tpttbs-l1-report-tool
+    env: node
+    plan: free
+    buildCommand: cd tpttbs-app && npm install
+    startCommand: cd tpttbs-app && node server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.0
