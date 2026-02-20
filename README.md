@@ -4,6 +4,10 @@
 
 This project provides a tool for generating **TPTTBS L1 (Security by Security Reporting of Securitisation Vehicles)** reports for the **Banque centrale du Luxembourg (BCL)**.
 
+**IMPORTANT:** This tool is specifically designed for **Luxembourg-resident securitisation vehicles** subject to BCL reporting requirements. It is **not** applicable for other jurisdictions.
+
+For official instructions and documentation, please refer to the [BCL TPTTBS Reporting Page](https://www.bcl.lu/en/Regulatory-reporting/Vehicules_de_titrisation/Instructions/TPTTBS/index.html).
+
 The application allows users to:
 - Fill in the TPTTBS L1 report using a web-based interface (mimicking the official Excel layout).
 - Validate data against BCL verification rules (format, logic, cross-field checks).
